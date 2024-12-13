@@ -9,9 +9,14 @@ interface Task {
 interface TaskListProps {
   tasks: Task[];
   onToggleComplete: (id: string) => void;
+  onDeleteTask: (id: string) => void;
 }
 
-const TaskList: React.FC<TaskListProps> = ({ tasks, onToggleComplete }) => {
+const TaskList: React.FC<TaskListProps> = ({
+  tasks,
+  onToggleComplete,
+  onDeleteTask,
+}) => {
   return (
     <div>
       <h2>Tasks</h2>
@@ -30,6 +35,20 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, onToggleComplete }) => {
           >
             {task.title}
           </span>
+          <button
+            onClick={() => onDeleteTask(task.id)}
+            style={{
+              marginLeft: "10px",
+              padding: "5px 10px",
+              backgroundColor: "#ff5c5c",
+              color: "#fff",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+          >
+            Delete
+          </button>
         </div>
       ))}
     </div>

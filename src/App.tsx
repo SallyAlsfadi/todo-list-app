@@ -14,6 +14,9 @@ const App: React.FC = () => {
     };
     setTasks((prevTasks: Task[]) => [...prevTasks, newTask]);
   };
+  const deleteTask = (id: string) => {
+    setTasks((prevTasks: Task[]) => prevTasks.filter((task) => task.id !== id));
+  };
 
   const toggleComplete = (id: string) => {
     setTasks((prevTasks: Task[]) =>
@@ -29,7 +32,11 @@ const App: React.FC = () => {
       <main style={{ padding: "20px", flex: 1 }}>
         <h1>Welcome to the To-Do List App</h1>
         <TaskInput onAddTask={addTask} />
-        <TaskList tasks={tasks} onToggleComplete={toggleComplete} />
+        <TaskList
+          tasks={tasks}
+          onToggleComplete={toggleComplete}
+          onDeleteTask={deleteTask}
+        />
       </main>
     </div>
   );
