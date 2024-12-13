@@ -13,11 +13,19 @@ const Sidebar: React.FC = () => {
       }}
     >
       <h3>Sally Alsafadi</h3>
-      <ul>
-        <li>Templates</li>
-        <li>Categories</li>
-        <li>Analytics</li>
-        <li>Settings</li>
+      <ul
+        style={{
+          listStyle: "none",
+          padding: 0,
+          marginTop: "20px",
+          width: "100%",
+          textAlign: "center",
+        }}
+      >
+        <li style={{ marginBottom: "10px", cursor: "pointer" }}>Templates</li>
+        <li style={{ marginBottom: "10px", cursor: "pointer" }}>Categories</li>
+        <li style={{ marginBottom: "10px", cursor: "pointer" }}>Analytics</li>
+        <li style={{ marginBottom: "10px", cursor: "pointer" }}>Settings</li>
       </ul>
     </div>
   );
