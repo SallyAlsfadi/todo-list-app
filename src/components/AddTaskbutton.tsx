@@ -1,32 +1,18 @@
 import React from "react";
 
-interface AddButtonProps {
+interface AddTaskButtonProps {
   onClick: () => void;
 }
 
-const AddButton: React.FC<AddButtonProps> = ({ onClick }) => {
+const AddTaskButton: React.FC<AddTaskButtonProps> = ({ onClick }) => {
   return (
-    <button style={styles.addButton} onClick={onClick}>
-      +
+    <button
+      className="bg-purple-500 text-white p-3 mt-4 rounded-full shadow-lg w-full text-center hover:bg-purple-600"
+      onClick={onClick}
+    >
+      + New Task
     </button>
   );
 };
 
-const styles: { [key: string]: React.CSSProperties } = {
-  addButton: {
-    position: "fixed",
-    bottom: "30px",
-    right: "30px",
-    width: "50px",
-    height: "50px",
-    borderRadius: "50%",
-    backgroundColor: "#619BFC",
-    color: "white",
-    fontSize: "24px",
-    border: "none",
-    cursor: "pointer",
-    boxShadow: "0px 4px 6px rgba(0,0,0,0.2)",
-  },
-};
-
-export default AddButton;
+export default AddTaskButton;

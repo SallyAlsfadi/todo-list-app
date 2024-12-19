@@ -1,62 +1,43 @@
 import React from "react";
+import { FiTrash2 } from "react-icons/fi";
+
+interface Task {
+  id: number;
+  task: string;
+  completed: boolean;
+}
 
 interface TaskItemProps {
-  task: string;
-  time: string;
-  completed: boolean;
-  onDelete: () => void;
-  onToggle: () => void;
+  task: Task;
+  onDeleteTask: (id: number) => void;
+  onToggleComplete: (id: number) => void;
 }
 
 const TaskItem: React.FC<TaskItemProps> = ({
   task,
-  time,
-  completed,
-  onDelete,
-  onToggle,
+  onDeleteTask,
+  onToggleComplete,
 }) => {
   return (
-    <div style={styles.container}>
-      <input type="checkbox" checked={completed} onChange={onToggle} />
-      <span
-        style={{
-          ...styles.text,
-          textDecoration: completed ? "line-through" : "none",
-        }}
-      >
-        {task}
-      </span>
-      <span>{time}</span>
-      <button style={styles.deleteButton} onClick={onDelete}>
-        ❌
+    <div
+      className={`flex items-center justify-between p-3 mb-2 rounded-lg ${
+        task.completed ? "bg-purple-100 line-through text-gray-500" : "bg-white"
+      } border`}
+    >
+      <div className="flex items-center">
+        <input
+          type="radio"
+          checked={task.completed}
+          onChange={() => onToggleComplete(task.id)}
+          className="mr-3"
+        />
+        <span>{task.task}</span>
+      </div>
+      <button onClick={() => onDeleteTask(task.id)}>
+        <FiTrash2 className="text-purple-500 hover:text-purple-700" />
       </button>
     </div>
   );
-};
-
-const styles: { [key: string]: React.CSSProperties } = {
-  container: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    background: "#fff",
-    padding: "10px",
-    margin: "10px 0",
-    borderRadius: "10px",
-    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-  },
-  text: {
-    flex: 1,
-    marginLeft: "10px",
-  },
-  deleteButton: {
-    background: "red",
-    color: "white",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-    padding: "5px",
-  },
 };
 
 export default TaskItem;

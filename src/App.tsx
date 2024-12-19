@@ -2,39 +2,36 @@ import React, { useState } from "react";
 import Header from "./components/Header";
 import DateDisplay from "./components/DateDisplay";
 import TaskList from "./components/TaskList";
-import TaskItem from "./components/TaskItem";
-import AddButton from "./components/AddTaskbutton";
+import AddTaskModal from "./components/AddTaskModal";
+import AddTaskButton from "./components/AddTaskbutton";
+import "./index.css";
 
 interface Task {
   id: number;
   task: string;
-  time: string;
   completed: boolean;
 }
 
 const App: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([
-    { id: 1, task: "Reading Book", time: "12 pm", completed: false },
+    { id: 1, task: "Send wireframes", completed: false },
   ]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const addTask = () => {
-    const newTaskName = prompt("Enter task name:");
-    const newTaskTime = prompt("Enter task time (e.g., 2 pm):");
-
-    if (newTaskName && newTaskTime) {
-      const newTask = {
-        id: Date.now(),
-        task: newTaskName,
-        time: newTaskTime,
-        completed: false,
-      };
-      setTasks([...tasks, newTask]);
-    }
+  const addTask = (taskName: string) => {
+    const newTask: Task = {
+      id: Date.now(),
+      task: taskName,
+      completed: false,
+    };
+    setTasks([...tasks, newTask]);
   };
+
   const deleteTask = (id: number) => {
     const updatedTasks = tasks.filter((task) => task.id !== id);
     setTasks(updatedTasks);
   };
+
   const toggleCompleteTask = (id: number) => {
     const updatedTasks = tasks.map((task) =>
       task.id === id ? { ...task, completed: !task.completed } : task
@@ -43,29 +40,25 @@ const App: React.FC = () => {
   };
 
   return (
-    <div style={styles.appContainer}>
-      <Header />
-
-      <DateDisplay />
-
-      <TaskList
-        tasks={tasks}
-        onDeleteTask={deleteTask}
-        onToggleComplete={toggleCompleteTask}
-      />
-      <AddButton onClick={addTask} />
+    <div className="w-full min-h-screen flex flex-col items-center bg-purple-50 p-6">
+      <div className="bg-white w-full max-w-md p-6 rounded-lg shadow-md">
+        <Header />
+        <DateDisplay />
+        <TaskList
+          tasks={tasks}
+          onDeleteTask={deleteTask}
+          onToggleComplete={toggleCompleteTask}
+        />
+        <AddTaskButton onClick={() => setIsModalOpen(true)} />
+        {isModalOpen && (
+          <AddTaskModal
+            onClose={() => setIsModalOpen(false)}
+            onAddTask={addTask}
+          />
+        )}
+      </div>
     </div>
   );
 };
-const styles: { [key: string]: React.CSSProperties } = {
-  appContainer: {
-    width: "360px",
-    margin: "0 auto",
-    padding: "20px",
-    backgroundColor: "#f4f4f4",
-    borderRadius: "10px",
-    boxShadow: "0px 4px 6px rgba(0,0,0,0.1)",
-    fontFamily: "Arial, sans-serif",
-  },
-};
+
 export default App;

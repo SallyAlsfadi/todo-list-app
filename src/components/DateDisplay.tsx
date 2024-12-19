@@ -1,22 +1,13 @@
 import React from "react";
 
 const DateDisplay: React.FC = () => {
-  return (
-    <div style={styles.container}>
-      <h2 style={styles.date}>16th December 2024</h2>
-    </div>
-  );
-};
+  const today = new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  });
 
-const styles: { [key: string]: React.CSSProperties } = {
-  container: {
-    textAlign: "center",
-    margin: "20px 0",
-  },
-  date: {
-    fontSize: "24px",
-    fontWeight: "bold",
-  },
+  return <p className="text-gray-500 mt-1">{today}</p>;
 };
 
 export default DateDisplay;
