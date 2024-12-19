@@ -1,57 +1,38 @@
 import React from "react";
-import styles from "./TaskList.module.css";
-
-interface Task {
-  id: string;
-  title: string;
-  completed: boolean;
-}
+import TaskItem from "./TaskItem";
 
 interface TaskListProps {
-  tasks: Task[];
-  onToggleComplete: (id: string) => void;
-  onDeleteTask: (id: string) => void;
+  tasks: {
+    completed: boolean;
+    id: number;
+    task: string;
+    time: string;
+  }[];
+  onDeleteTask: (id: number) => void;
+  onToggleComplete: (id: number) => void;
 }
 
 const TaskList: React.FC<TaskListProps> = ({
   tasks,
-  onToggleComplete,
   onDeleteTask,
+  onToggleComplete,
 }) => {
   return (
     <div>
-      <h2>Tasks</h2>
-      {tasks.map((task) => (
-        <div key={task.id} style={{ marginBottom: "10px" }}>
-          <input
-            type="checkbox"
-            checked={task.completed}
-            onChange={() => onToggleComplete(task.id)}
+      {tasks.length > 0 ? (
+        tasks.map((item) => (
+          <TaskItem
+            key={item.id}
+            task={item.task}
+            time={item.time}
+            completed={item.completed}
+            onDelete={() => onDeleteTask(item.id)}
+            onToggle={() => onToggleComplete(item.id)}
           />
-          <span
-            style={{
-              textDecoration: task.completed ? "line-through" : "none",
-              marginLeft: "10px",
-            }}
-          >
-            {task.title}
-          </span>
-          <button
-            onClick={() => onDeleteTask(task.id)}
-            style={{
-              marginLeft: "10px",
-              padding: "5px 10px",
-              backgroundColor: "#ff5c5c",
-              color: "#fff",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer",
-            }}
-          >
-            Delete
-          </button>
-        </div>
-      ))}
+        ))
+      ) : (
+        <p>No tasks available</p>
+      )}
     </div>
   );
 };
